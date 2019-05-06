@@ -1,0 +1,3 @@
+{
+  "DATA_FILE": "data_for_student_case.csv"
+}
