@@ -1,9 +1,9 @@
 import datetime
-
+import numpy as np
 
 class Node:
     def __init__(self, v=None):
-        self.v = v
+        self.v = v.copy()
         self.n = None
 
 
@@ -120,7 +120,7 @@ class CardTracker:
     def _move_queue(self, current_ts):
 
         # 1
-        new_date = current_ts - datetime.timedelta(days=1)
+        new_date = current_ts - np.timedelta64(1, 'D')
         while self._last_day is not None and self._last_day.v['creationdate'] < new_date:
             self._amount_1 -= self._last_day.v['amount']
             self._count_1 -= 1
@@ -128,7 +128,7 @@ class CardTracker:
             self._last_day = self._last_day.n
 
         # 30
-        new_date = current_ts - datetime.timedelta(days=30)
+        new_date = current_ts - np.timedelta64(30, 'D')
         while self._last_30_days is not None and self._last_30_days.v['creationdate'] < new_date:
             amount = self._last_30_days.v['amount']
 
@@ -149,7 +149,7 @@ class CardTracker:
 
             self._last_30_days = self._last_30_days.n
 
-        new_date = current_ts - datetime.timedelta(days=90)
+        new_date = current_ts - np.timedelta64(90, 'D')
         while self._last_90_days is not None and self._last_90_days.v['creationdate'] < new_date:
             # 90
             self._amount_90 -= self._last_90_days.v['amount']
@@ -158,83 +158,130 @@ class CardTracker:
             self._last_90_days = self._last_90_days.n
 
 
+def extract_feature(row, _hash):
+    key = row['card_id']
+
+    if key in _hash:
+        card_tracker = _hash[key]
+
+    else:
+        card_tracker = CardTracker(key)
+        _hash[key] = card_tracker
+
+    return card_tracker.feed(row)
+
+def extract_from_pandas(df):
+    _hash = {}
+    features = df.apply(lambda e: extract_feature(e, _hash), axis=1)
+
+    return features
+
+
 if __name__ == "__main__":
     tracker = CardTracker("sample")
 
+    import pandas as pd
+
+    df = pd.DataFrame([{
+        'card_id': 0,
+        'amount': 10,
+        'creationdate': np.datetime64('2015-07-01T00:43'),
+        'currencycode': 'GBP',
+        'shoppercountrycode': 'GB',
+        'txvariantcode': 'visadebit'},
+        {'amount': 10,
+         'card_id': 0,
+         'creationdate': np.datetime64('2015-07-01T00:44'),
+         'currencycode': 'GBP',
+         'shoppercountrycode': 'GB',
+         'txvariantcode': 'visadebit'},
+        {'amount': 10,
+         'card_id': 0,
+         'creationdate': np.datetime64('2015-07-01T00:45'),
+         'currencycode': 'GBP',
+         'shoppercountrycode': 'GB',
+         'txvariantcode': 'visadebit'}
+    ])
+
+    _hash = {}
+    features = df.apply(lambda e: extract_feature(e, _hash), axis=1)
+
+    print(features)
+
     print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': datetime.datetime(2015, 7, 1, 0, 0, 43),
+                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
                                                         'currencycode': 'GBP',
                                                         'shoppercountrycode': 'GB',
                                                         'txvariantcode': 'visadebit'}))))
     print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': datetime.datetime(2015, 7, 1, 0, 0, 43),
+                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
                                                         'currencycode': 'GBP',
                                                         'shoppercountrycode': 'GB',
                                                         'txvariantcode': 'visadebit'}))))
     print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': datetime.datetime(2015, 7, 1, 0, 0, 43),
+                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
                                                         'currencycode': 'GBP',
                                                         'shoppercountrycode': 'GB',
                                                         'txvariantcode': 'visadebit'}))))
     print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': datetime.datetime(2015, 7, 1, 0, 0, 43),
+                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
                                                         'currencycode': 'GBP',
                                                         'shoppercountrycode': 'GB',
                                                         'txvariantcode': 'visadebit'}))))
 
     print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': datetime.datetime(2015, 7, 1, 0, 0, 43),
+                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
                                                         'currencycode': 'MXN',
                                                         'shoppercountrycode': 'GB',
                                                         'txvariantcode': 'visadebit'}))))
     print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': datetime.datetime(2015, 7, 1, 0, 0, 43),
+                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
                                                         'currencycode': 'MXN',
                                                         'shoppercountrycode': 'GB',
                                                         'txvariantcode': 'visadebit'}))))
 
     print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': datetime.datetime(2015, 7, 1, 0, 0, 43),
+                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
                                                         'currencycode': 'MXN',
                                                         'shoppercountrycode': 'US',
                                                         'txvariantcode': 'visadebit'}))))
     print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': datetime.datetime(2015, 7, 1, 0, 0, 43),
-                                                        'currencycode': 'MXN',
-                                                        'shoppercountrycode': 'US',
-                                                        'txvariantcode': 'visadebit'}))))
-
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': datetime.datetime(2015, 7, 4, 0, 0, 43),
-                                                        'currencycode': 'MXN',
-                                                        'shoppercountrycode': 'US',
-                                                        'txvariantcode': 'visadebit'}))))
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': datetime.datetime(2015, 7, 4, 0, 0, 43),
+                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
                                                         'currencycode': 'MXN',
                                                         'shoppercountrycode': 'US',
                                                         'txvariantcode': 'visadebit'}))))
 
     print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': datetime.datetime(2015, 8, 4, 0, 0, 43),
+                                                        'creationdate': np.datetime64('2015-07-04T00:43'),
+                                                        'currencycode': 'MXN',
+                                                        'shoppercountrycode': 'US',
+                                                        'txvariantcode': 'visadebit'}))))
+    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
+                                                        'creationdate': np.datetime64('2015-07-04T00:43'),
                                                         'currencycode': 'MXN',
                                                         'shoppercountrycode': 'US',
                                                         'txvariantcode': 'visadebit'}))))
 
     print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': datetime.datetime(2015, 8, 4, 0, 0, 43),
+                                                        'creationdate': np.datetime64('2015-08-04T00:43'),
                                                         'currencycode': 'MXN',
                                                         'shoppercountrycode': 'US',
                                                         'txvariantcode': 'visadebit'}))))
 
     print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': datetime.datetime(2016, 8, 4, 0, 0, 43),
+                                                        'creationdate': np.datetime64('2015-08-04T00:43'),
                                                         'currencycode': 'MXN',
                                                         'shoppercountrycode': 'US',
                                                         'txvariantcode': 'visadebit'}))))
 
     print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': datetime.datetime(2016, 8, 4, 0, 0, 44),
+                                                        'creationdate': np.datetime64('2016-08-04T00:43'),
+                                                        'currencycode': 'MXN',
+                                                        'shoppercountrycode': 'US',
+                                                        'txvariantcode': 'visadebit'}))))
+
+    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
+                                                        'creationdate': np.datetime64('2016-08-04T00:44'),
                                                         'currencycode': 'MXN',
                                                         'shoppercountrycode': 'US',
                                                         'txvariantcode': 'visadebit'}))))
