@@ -1,6 +1,7 @@
 import datetime
 import numpy as np
 
+
 class Node:
     def __init__(self, v=None):
         self.v = v.copy()
@@ -169,6 +170,7 @@ def extract_feature(row, _hash):
         _hash[key] = card_tracker
 
     return card_tracker.feed(row)
+
 
 def extract_from_pandas(df):
     _hash = {}
