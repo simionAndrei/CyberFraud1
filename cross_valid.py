@@ -2,6 +2,8 @@ from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_sc
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import StratifiedKFold
 
+from imblearn.over_sampling import SMOTE
+
 import numpy as np
 
 class CrossValidation():
@@ -9,6 +11,7 @@ class CrossValidation():
   def __init__(self, data, k_folds, random_seed, logger):
     self.logger = logger
     self.data = data
+    self.X, self.y = self.data['X'], self.data['y']
     self.k_folds = k_folds
     self.random_seed = random_seed
 
@@ -21,7 +24,7 @@ class CrossValidation():
       random_state = self.random_seed)
 
     acc_list, prec_list, rec_list, fp_list = [[] for _ in range(4)]
-    for fold_idx, (train_idx, test_idx) in enumerate(strat_kfold.split(self.data['X'], self.['y'])):
+    for fold_idx, (train_idx, test_idx) in enumerate(strat_kfold.split(self.X, self.y)):
       crt_X_train, crt_X_test = self.X[train_idx], self.X[test_idx]
       crt_y_train, crt_y_test = self.y[train_idx], self.y[test_idx]
 
@@ -29,10 +32,10 @@ class CrossValidation():
 
       y_pred = model.predict(crt_X_test)
 
-      tn, fp, fn, tp = confusion_matrix(crt_y_train, y_pred).ravel()
-      acc_list.append(accuracy_score(crt_y_train, y_pred))
-      prec_list.append(precision_score(crt_y_train, y_pred))
-      rec_list.append(recall_score(crt_y_train, y_pred))
+      tn, fp, fn, tp = confusion_matrix(crt_y_test, y_pred).ravel()
+      acc_list.append(accuracy_score(crt_y_test, y_pred))
+      prec_list.append(precision_score(crt_y_test, y_pred))
+      rec_list.append(recall_score(crt_y_test, y_pred))
       fp_list.append(fp)
 
       self.logger.log("Accuracy at fold#{}: {:.2f}".format(fold_idx, acc_list[-1]))
