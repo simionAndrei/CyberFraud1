@@ -123,7 +123,7 @@ class CardTracker:
         # 1
         new_date = current_ts - np.timedelta64(1, 'D')
         while self._last_day is not None and self._last_day.v['creationdate'] < new_date:
-            self._amount_1 = ensure_zero(self._amount_1 - self._last_day.v['amount'])
+            self._amount_1 -= self._last_day.v['amount']
             self._count_1 -= 1
 
             self._last_day = self._last_day.n
@@ -133,17 +133,17 @@ class CardTracker:
         while self._last_30_days is not None and self._last_30_days.v['creationdate'] < new_date:
             amount = self._last_30_days.v['amount']
 
-            self._amount_30 = ensure_zero(self._amount_30 - amount)
+            self._amount_30 -= amount
             self._count_30 -= 1
 
-            self._currency_amount_30[self._last_30_days.v['currencycode']] = ensure_zero(self._currency_amount_30.get(
-                self._last_30_days.v['currencycode'], 0) - amount)
+            self._currency_amount_30[self._last_30_days.v['currencycode']] = self._currency_amount_30.get(
+                self._last_30_days.v['currencycode'], 0) - amount
             self._currency_count_30[self._last_30_days.v['currencycode']] = self._currency_count_30.get(
                 self._last_30_days.v['currencycode'], 0) - 1
 
-            self._country_amount_30[self._last_30_days.v['shoppercountrycode']] = ensure_zero(self._country_amount_30.get(
+            self._country_amount_30[self._last_30_days.v['shoppercountrycode']] = self._country_amount_30.get(
                 self._last_30_days.v['shoppercountrycode'],
-                0) - amount)
+                0) - amount
             self._country_count_30[self._last_30_days.v['shoppercountrycode']] = self._country_count_30.get(
                 self._last_30_days.v['shoppercountrycode'],
                 0) - 1
@@ -153,14 +153,10 @@ class CardTracker:
         new_date = current_ts - np.timedelta64(90, 'D')
         while self._last_90_days is not None and self._last_90_days.v['creationdate'] < new_date:
             # 90
-            self._amount_90 = ensure_zero(self._amount_90 - self._last_90_days.v['amount'])
+            self._amount_90 -= self._last_90_days.v['amount']
             self._count_90 -= 1
 
             self._last_90_days = self._last_90_days.n
-
-
-def ensure_zero(n):
-    return 0 if n < 0.5 else n
 
 
 '''
@@ -182,7 +178,7 @@ def extract_features_from_data(df):
 
 
     return features
-'''
+''' 
 
 if __name__ == "__main__":
     print("Library module. No main function")
