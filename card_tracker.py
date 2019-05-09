@@ -19,6 +19,8 @@ class CardTracker:
         "Number_Currency_Type_Month",
         "Amount_Country_Type_Month",
         "Number_Country_Type_Month",
+        "Unique emails",
+        "Unique ips"
     ]
 
     def __init__(self, id) -> None:
@@ -45,9 +47,15 @@ class CardTracker:
         self._amount_90 = 0
         self._count_90 = 0
 
+        self._emails = set()
+        self._ips = set()
+
     def feed(self, entry):
         current_ts = entry['creationdate']
         self._move_queue(current_ts)
+
+        self._emails.add(entry['mail_id'])
+        self._ips.add(entry['ip_id'])
 
         ret = [
             # Txn amount over month
@@ -76,6 +84,12 @@ class CardTracker:
 
             # Number country type over month
             self._country_count_30.get(entry['shoppercountrycode'], 0),
+
+            # Number of unique emails used
+            len(self._emails),
+
+            # Number of unique ips used
+            len(self._ips),
         ]
 
         # add it
@@ -157,7 +171,6 @@ class CardTracker:
             self._count_90 -= 1
 
             self._last_90_days = self._last_90_days.n
-
 
 
 '''
