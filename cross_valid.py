@@ -11,12 +11,6 @@ class CrossValidation():
     self.data = data
     self.k_folds = k_folds
     self.random_seed = random_seed
-    self.scoring = {'accuracy': 'accuracy', 
-                    'precision': 'precision',
-                    'recall':  'recall',
-                    'f1': 'f1'
-                   }
-
 
   def evaluate_model(self, model):
 
