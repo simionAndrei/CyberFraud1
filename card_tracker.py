@@ -9,16 +9,16 @@ class Node:
 
 
 class CardTracker:
-    col_names = [
-        "Txn amount over month",
-        "Average over 3 months",
-        "Average daily over month",
-        "Amount same day",
-        "Number same day",
-        "Amount currency type over month",
-        "Number currency type over month",
-        "Amount country type over month",
-        "Number country type over month",
+    colnames = [
+        "Txn_Amount_Month",
+        "Average_3Months",
+        "Average_DailyMonth",
+        "Amount_SameDay",
+        "Number_Same_Day",
+        "Amount_Currency_Type_Month",
+        "Number_Currency_Type_Month",
+        "Amount_Country_Type_Month",
+        "Number_Country_Type_Month",
     ]
 
     def __init__(self, id) -> None:
@@ -159,12 +159,12 @@ class CardTracker:
             self._last_90_days = self._last_90_days.n
 
 
+'''
 def extract_feature(row, _hash):
     key = row['card_id']
 
     if key in _hash:
         card_tracker = _hash[key]
-
     else:
         card_tracker = CardTracker(key)
         _hash[key] = card_tracker
@@ -172,118 +172,14 @@ def extract_feature(row, _hash):
     return card_tracker.feed(row)
 
 
-def extract_from_pandas(df):
+def extract_features_from_data(df):
     _hash = {}
     features = df.apply(lambda e: extract_feature(e, _hash), axis=1)
 
+
     return features
+''' 
 
 
 if __name__ == "__main__":
-    tracker = CardTracker("sample")
-
-    import pandas as pd
-
-    df = pd.DataFrame([{
-        'card_id': 0,
-        'amount': 10,
-        'creationdate': np.datetime64('2015-07-01T00:43'),
-        'currencycode': 'GBP',
-        'shoppercountrycode': 'GB',
-        'txvariantcode': 'visadebit'},
-        {'amount': 10,
-         'card_id': 0,
-         'creationdate': np.datetime64('2015-07-01T00:44'),
-         'currencycode': 'GBP',
-         'shoppercountrycode': 'GB',
-         'txvariantcode': 'visadebit'},
-        {'amount': 10,
-         'card_id': 0,
-         'creationdate': np.datetime64('2015-07-01T00:45'),
-         'currencycode': 'GBP',
-         'shoppercountrycode': 'GB',
-         'txvariantcode': 'visadebit'}
-    ])
-
-    _hash = {}
-    features = df.apply(lambda e: extract_feature(e, _hash), axis=1)
-
-    print(features)
-
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
-                                                        'currencycode': 'GBP',
-                                                        'shoppercountrycode': 'GB',
-                                                        'txvariantcode': 'visadebit'}))))
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
-                                                        'currencycode': 'GBP',
-                                                        'shoppercountrycode': 'GB',
-                                                        'txvariantcode': 'visadebit'}))))
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
-                                                        'currencycode': 'GBP',
-                                                        'shoppercountrycode': 'GB',
-                                                        'txvariantcode': 'visadebit'}))))
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
-                                                        'currencycode': 'GBP',
-                                                        'shoppercountrycode': 'GB',
-                                                        'txvariantcode': 'visadebit'}))))
-
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
-                                                        'currencycode': 'MXN',
-                                                        'shoppercountrycode': 'GB',
-                                                        'txvariantcode': 'visadebit'}))))
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
-                                                        'currencycode': 'MXN',
-                                                        'shoppercountrycode': 'GB',
-                                                        'txvariantcode': 'visadebit'}))))
-
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
-                                                        'currencycode': 'MXN',
-                                                        'shoppercountrycode': 'US',
-                                                        'txvariantcode': 'visadebit'}))))
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': np.datetime64('2015-07-01T00:43'),
-                                                        'currencycode': 'MXN',
-                                                        'shoppercountrycode': 'US',
-                                                        'txvariantcode': 'visadebit'}))))
-
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': np.datetime64('2015-07-04T00:43'),
-                                                        'currencycode': 'MXN',
-                                                        'shoppercountrycode': 'US',
-                                                        'txvariantcode': 'visadebit'}))))
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': np.datetime64('2015-07-04T00:43'),
-                                                        'currencycode': 'MXN',
-                                                        'shoppercountrycode': 'US',
-                                                        'txvariantcode': 'visadebit'}))))
-
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': np.datetime64('2015-08-04T00:43'),
-                                                        'currencycode': 'MXN',
-                                                        'shoppercountrycode': 'US',
-                                                        'txvariantcode': 'visadebit'}))))
-
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': np.datetime64('2015-08-04T00:43'),
-                                                        'currencycode': 'MXN',
-                                                        'shoppercountrycode': 'US',
-                                                        'txvariantcode': 'visadebit'}))))
-
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': np.datetime64('2016-08-04T00:43'),
-                                                        'currencycode': 'MXN',
-                                                        'shoppercountrycode': 'US',
-                                                        'txvariantcode': 'visadebit'}))))
-
-    print(dict(zip(CardTracker.col_names, tracker.feed({'amount': 10,
-                                                        'creationdate': np.datetime64('2016-08-04T00:44'),
-                                                        'currencycode': 'MXN',
-                                                        'shoppercountrycode': 'US',
-                                                        'txvariantcode': 'visadebit'}))))
+    print("Library module. No main function")
