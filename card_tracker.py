@@ -66,13 +66,13 @@ class CardTracker:
             self._count_1,
 
             # Amount currency type over month
-            self._currency_amount_30.get(entry['currencycode'], 0),
+            self._currency_amount_30.get(entry['currencycode'], 0) / 30,
 
             # Number currency type over month
             self._currency_count_30.get(entry['currencycode'], 0),
 
             # Amount country type over month
-            self._country_amount_30.get(entry['shoppercountrycode'], 0),
+            self._country_amount_30.get(entry['shoppercountrycode'], 0) / 30,
 
             # Number country type over month
             self._country_count_30.get(entry['shoppercountrycode'], 0),
@@ -157,6 +157,7 @@ class CardTracker:
             self._count_90 -= 1
 
             self._last_90_days = self._last_90_days.n
+
 
 
 '''
