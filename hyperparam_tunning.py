@@ -18,7 +18,7 @@ class HyperparamGridSearcher():
     random_grid_search = RandomizedSearchCV(estimator = classifier, 
       param_distributions = hyperparams_grid, n_iter = num_iterations, 
       cv = 3, verbose=2, random_state=13, n_jobs = -1, scoring = ['f1', 'roc_auc'],
-      refit = 'f1')
+      refit = 'roc_auc')
 
     random_grid_search.fit(self.valid_data['X'], self.valid_data['y'])
     best_params = random_grid_search.best_params_
@@ -30,7 +30,7 @@ class HyperparamGridSearcher():
     params_filename = type(classifier).__name__ + "_params_" + self.logger.get_time_prefix()
     params_filename += ".json"
 
-    with open(self.logger.get_model_file(params_filename, data_type), 'w') as fp:
+    with open(self.logger.get_model_file(params_filename), 'w') as fp:
       json.dump(best_params, fp)
 
     return best_params
