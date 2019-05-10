@@ -6,6 +6,8 @@ from imblearn.over_sampling import SMOTE
 
 import numpy as np
 
+from hyperparam_tunning import HyperparamGridSearcher
+
 class CrossValidation():
 
   def __init__(self, data, k_folds, random_seed, logger):
@@ -15,7 +17,7 @@ class CrossValidation():
     self.k_folds = k_folds
     self.random_seed = random_seed
 
-  def evaluate_model(self, model, use_smote = True):
+  def evaluate_model(self, model, model_hyperparams_grid, use_smote = True):
 
     self.logger.log("Start {}-fold cross validation on {} entries".format(
       self.k_folds, self.data['y'].shape[0]))
@@ -29,9 +31,14 @@ class CrossValidation():
       crt_y_train, crt_y_test = self.y[train_idx], self.y[test_idx]
 
       if use_smote:
-        print("SMOTE")
+        self.logger.log("Using SMOTE")
         sm = SMOTE(random_state = 13)
         crt_X_train, crt_y_train = sm.fit_sample(crt_X_train, crt_y_train.ravel())
+
+      valid_data = {'X': crt_X_train, 'y': crt_y_train}
+      grid_searcher = HyperparamGridSearcher(valid_data, self.logger)
+
+      grid_searcher.rand_grid_search(model, model_hyperparams_grid, 50)
 
       model.fit(crt_X_train, crt_y_train)
 

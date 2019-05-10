@@ -18,6 +18,25 @@ if __name__ == '__main__':
   cross_validator = CrossValidation(data = data, k_folds = 10, random_seed = 13,
    logger = logger)
 
-  model = RandomForestClassifier(n_estimators = 250, max_depth = 11, random_state = 13, n_jobs = -1)
+  model = RandomForestClassifier(n_jobs = -1)
+
+  n_estimators = list(range(10, 200, 10))
+  max_features = ['log2', 'sqrt', None]
+  max_depth = list(range(5, 12))
+  max_depth.append(None)
+  min_samples_split = [2, 5, 10]
+  min_samples_leaf = [1, 2, 4, 8]
+  bootstrap = [True, False]
+  criterion = ["gini", "entropy"]
+  random_state = [13]
+
+  randf_hyperparams_grid = {'n_estimators': n_estimators,
+                          'max_features': max_features,
+                          'max_depth': max_depth,
+                          'min_samples_split': min_samples_split,
+                          'min_samples_leaf': min_samples_leaf,
+                          'bootstrap': bootstrap,
+                          'criterion': criterion,
+                          'random_state': random_state}
   #DecisionTreeClassifier(random_state=0)
-  cross_validator.evaluate_model(model)  
+  cross_validator.evaluate_model(model, randf_hyperparams_grid)  

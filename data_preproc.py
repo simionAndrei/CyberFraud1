@@ -121,7 +121,7 @@ class DataPreprocessor():
     return pd.concat([self.df, self.additional_feats_df], axis = 1)
 
 
-  def get_preprocessed_data(self, normalize = False):
+  def get_preprocessed_data(self, normalize = False, without_additional = False):
     
     self._drop_nans()
     self._drop_refused_transactions()
