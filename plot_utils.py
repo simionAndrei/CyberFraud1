@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sklearn.metrics as metrics
 
-def create_roc_plot(plt_title, y_pred_prob, y_test, filename., logger):
+def create_roc_plot(plt_title, y_pred_prob, y_test, filename, logger):
 
   preds = y_pred_prob[:, 1]
   fpr, tpr, threshold = metrics.roc_curve(y_test, preds)
@@ -15,7 +15,7 @@ def create_roc_plot(plt_title, y_pred_prob, y_test, filename., logger):
 
   plt.title(plt_title)
   plt.plot(fpr, tpr, 'b', label = "{:.2f}".format(roc_auc))
-  plt.plot([0 1], [0 1], 'r--')
+  plt.plot([0, 1], [0, 1], 'r--')
   plt.xlabel("True positive rate")
   plt.ylabel("False positive rate")
 

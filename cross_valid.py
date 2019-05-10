@@ -5,6 +5,7 @@ from sklearn.model_selection import StratifiedKFold
 from imblearn.over_sampling import SMOTE
 
 import numpy as np
+import json
 
 from hyperparam_tunning import HyperparamGridSearcher
 from plot_utils import create_roc_plot
@@ -42,16 +43,23 @@ class CrossValidation():
         grid_searcher = HyperparamGridSearcher(valid_data, self.logger)
         hyperparams = grid_searcher.rand_grid_search(model, model_hyperparams_grid, 50)
       else:
-        with open(self.logger.get_model_file(model_hyperparams_file))
+        with open(self.logger.get_model_file(model_hyperparams_file)) as fp:
           hyperparams = json.load(fp)
 
       model.set_params(**hyperparams)
 
       model.fit(crt_X_train, crt_y_train)
 
-      y_pred = model.predict(crt_X_test)
+      plt_title = type(model).__name__ + " " + ("with " if use_smote else "without ") + "SMOTE"
+      plt_title += " fold {}".format(fold_idx)
+      filename = "roc_" + ("withS_" if use_smote else "withoutS_") + str(fold_idx)
+      filename += ".jpg"
+      create_roc_plot(plt_title, model.predict_proba(crt_X_test), crt_y_test, filename, 
+        self.logger)
 
-      create_roc_plot()
+      y_pred = model.predict_proba(crt_X_test)
+      y_pred = y_pred[:, 1]
+      y_pred = y_pred > 0.6
 
       tn, fp, fn, tp = confusion_matrix(crt_y_test, y_pred).ravel()
       acc_list.append(accuracy_score(crt_y_test, y_pred))

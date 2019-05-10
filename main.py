@@ -38,5 +38,7 @@ if __name__ == '__main__':
                           'bootstrap': bootstrap,
                           'criterion': criterion,
                           'random_state': random_state}
+
+  model_hyperparams_file = 'RandomForestClassifier_params_2019-05-10_19_05_57.json'
   #DecisionTreeClassifier(random_state=0)
-  cross_validator.evaluate_model(model, randf_hyperparams_grid)  
+  cross_validator.evaluate_model(model, model_hyperparams_file = model_hyperparams_file)  
