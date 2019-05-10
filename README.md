@@ -15,5 +15,9 @@ The structure of the project is as follows:
 * `hyperparam_tunning.py` - The algorithm used perform random grid search.
 * `logger.py` - Logger class.
 * `plot_utils.py` - Utilities used to plot the results.
+* `data/` - Folder containing the dataset `data_for_student_case.csv`.
+* `logs/` - Folder where the logs are stored.
+* `models/` - Folder where the parameters for the classifiers are stored.
+* `output/` - Folder where the images output.
 
 For a more detailed look check the code comments.
