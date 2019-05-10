@@ -10,6 +10,7 @@ class HyperparamGridSearcher():
     self.valid_data = valid_data
     self.logger = logger
 
+  # Runs the random grid search algorithm
   def rand_grid_search(self, classifier, hyperparams_grid, num_iterations):
 
     self.logger.log("Start hyperparameter random grid-search for {}".format(

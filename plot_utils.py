@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sklearn.metrics as metrics
 
+# Creates the roc plot
 def create_roc_plot(plt_title, y_pred_prob, y_test, filename, logger):
 
   preds = y_pred_prob[:, 1]
@@ -27,7 +28,7 @@ def create_roc_plot(plt_title, y_pred_prob, y_test, filename, logger):
   plt.savefig(logger.get_output_file(filename), dpi = 120, 
     bbox_inches='tight')
 
-
+# Creates the correlation heatmap plot
 def create_correlation_heatmap(plt_title, corr_df, feats_names, filename, logger):
 
   fig = plt.figure(figsize=(8, 8))
@@ -44,7 +45,7 @@ def create_correlation_heatmap(plt_title, corr_df, feats_names, filename, logger
     bbox_inches='tight')
 
 
-
+# Creates the correlation heatmap plot for categories
 def create_categories_heatmap(data_df, feats_pair, filename, logger):
 
   crt_df = data_df[feats_pair + ["label"]]
@@ -78,6 +79,7 @@ def create_categories_heatmap(data_df, feats_pair, filename, logger):
   plt.savefig(logger.get_output_file(filename), dpi = 120, bbox_inches='tight')
 
 
+# Creates the barplot for fraud based on currency
 def create_barplot(data_df, filename, logger):
 
   ecomm_df = data_df[data_df.shopperinteraction == "Ecommerce"]

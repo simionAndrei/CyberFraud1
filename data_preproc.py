@@ -17,6 +17,7 @@ class DataPreprocessor():
     self._read_data()
 
 
+  # Load the data from file
   def _read_data(self):
 
     self.logger.log("Reading transactions file...")
@@ -24,6 +25,7 @@ class DataPreprocessor():
     self.logger.log("Finish reading {} rows".format(self.df.shape[0]), show_time = True)
 
 
+  # Drop the entries with non-existing values.
   def _drop_nans(self):
 
     crt_size = self.df.shape[0]
@@ -43,6 +45,7 @@ class DataPreprocessor():
     self.logger.log("Dropping NaNs {}".format(crt_size - self.df.shape[0]))
 
 
+  # Drop the refused transactions
   def _drop_refused_transactions(self):
 
     crt_size = self.df.shape[0]
@@ -50,6 +53,7 @@ class DataPreprocessor():
     self.logger.log("Dropping REFUSED transaction {}".format(crt_size - self.df.shape[0]))
 
 
+  # Drop more columns
   def _drop_and_fix_columns(self):
 
     self.logger.log("Drop txid and bookingdate")
@@ -59,6 +63,7 @@ class DataPreprocessor():
     self.df.loc[self.df['cvcresponsecode'] > 3, 'cvcresponsecode'] = 3
 
 
+  # Converts to favorable data types
   def _convert_dtypes(self):
 
     self.logger.log("Convert datatypes for numeric, timestamps and categorical")
@@ -82,6 +87,7 @@ class DataPreprocessor():
     self.df.rename(columns = {'simple_journal': 'label'}, inplace = True)
 
 
+  # Sorts after the timestamp
   def _sort_after_timestamp(self):
     
     self.logger.log("Sort after creationdate")
@@ -89,6 +95,7 @@ class DataPreprocessor():
     self.df.reset_index(drop = True, inplace = True)
 
 
+  # Converts to USD
   def _convert_to_unique_currency(self):
 
     self.conversion = {'AUD': 0.699165, 'GBP': 1.31061, 'MXN': 0.222776586,
