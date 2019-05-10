@@ -2,6 +2,30 @@ import seaborn as sns
 import numpy as np
 
 import matplotlib.pyplot as plt
+import sklearn.metrics as metrics
+
+def create_roc_plot(plt_title, y_pred_prob, y_test, filename., logger):
+
+  preds = y_pred_prob[:, 1]
+  fpr, tpr, threshold = metrics.roc_curve(y_test, preds)
+  roc_auc = metrics.auc(fpr, tpr)
+
+  fig = plt.figure(figsize=(5, 5))
+  sns.set()
+
+  plt.title(plt_title)
+  plt.plot(fpr, tpr, 'b', label = "{:.2f}".format(roc_auc))
+  plt.plot([0 1], [0 1], 'r--')
+  plt.xlabel("True positive rate")
+  plt.ylabel("False positive rate")
+
+  plt.xlim([0, 1])
+  plt.ylim([0, 1])
+
+  plt.legend(loc = 'lower right')
+
+  plt.savefig(logger.get_output_file(filename), dpi = 120, 
+    bbox_inches='tight')
 
 
 def create_correlation_heatmap(plt_title, corr_df, feats_names, filename, logger):

@@ -20,7 +20,7 @@ if __name__ == '__main__':
 
   model = RandomForestClassifier(n_jobs = -1)
 
-  n_estimators = list(range(10, 200, 10))
+  n_estimators = list(range(10, 150, 10))
   max_features = ['log2', 'sqrt', None]
   max_depth = list(range(5, 12))
   max_depth.append(None)

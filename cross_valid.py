@@ -7,6 +7,7 @@ from imblearn.over_sampling import SMOTE
 import numpy as np
 
 from hyperparam_tunning import HyperparamGridSearcher
+from plot_utils import create_roc_plot
 
 class CrossValidation():
 
@@ -17,7 +18,8 @@ class CrossValidation():
     self.k_folds = k_folds
     self.random_seed = random_seed
 
-  def evaluate_model(self, model, model_hyperparams_grid, use_smote = True):
+  def evaluate_model(self, model, model_hyperparams_grid = None, model_hyperparams_file = None,
+    use_smote = True):
 
     self.logger.log("Start {}-fold cross validation on {} entries".format(
       self.k_folds, self.data['y'].shape[0]))
@@ -35,15 +37,21 @@ class CrossValidation():
         sm = SMOTE(random_state = 13)
         crt_X_train, crt_y_train = sm.fit_sample(crt_X_train, crt_y_train.ravel())
 
-      valid_data = {'X': crt_X_train, 'y': crt_y_train}
-      grid_searcher = HyperparamGridSearcher(valid_data, self.logger)
+      if model_hyperparams_grid:
+        valid_data = {'X': crt_X_train, 'y': crt_y_train}
+        grid_searcher = HyperparamGridSearcher(valid_data, self.logger)
+        hyperparams = grid_searcher.rand_grid_search(model, model_hyperparams_grid, 50)
+      else:
+        with open(self.logger.get_model_file(model_hyperparams_file))
+          hyperparams = json.load(fp)
 
-      best_params = grid_searcher.rand_grid_search(model, model_hyperparams_grid, 50)
-      model.set_params(**best_params)
+      model.set_params(**hyperparams)
 
       model.fit(crt_X_train, crt_y_train)
 
       y_pred = model.predict(crt_X_test)
+
+      create_roc_plot()
 
       tn, fp, fn, tp = confusion_matrix(crt_y_test, y_pred).ravel()
       acc_list.append(accuracy_score(crt_y_test, y_pred))
