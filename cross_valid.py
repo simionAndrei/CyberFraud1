@@ -20,10 +20,10 @@ class CrossValidation():
     self.logger.log("Start {}-fold cross validation on {} entries".format(
       self.k_folds, self.data['y'].shape[0]))
 
-    strat_kfold = StratifiedKFold(n_splits= self.k_folds, shuffle=True, 
+    strat_kfold = StratifiedKFold(n_splits= self.k_folds, shuffle=False, 
       random_state = self.random_seed)
 
-    acc_list, prec_list, rec_list, fp_list = [[] for _ in range(4)]
+    acc_list, prec_list, rec_list, confmat_list = [[] for _ in range(4)]
     for fold_idx, (train_idx, test_idx) in enumerate(strat_kfold.split(self.X, self.y)):
       crt_X_train, crt_X_test = self.X[train_idx], self.X[test_idx]
       crt_y_train, crt_y_test = self.y[train_idx], self.y[test_idx]
@@ -41,15 +41,19 @@ class CrossValidation():
       acc_list.append(accuracy_score(crt_y_test, y_pred))
       prec_list.append(precision_score(crt_y_test, y_pred))
       rec_list.append(recall_score(crt_y_test, y_pred))
-      fp_list.append(fp)
+      confmat_list.append([tn, fp, fn, tp])
 
+      self.logger.log("TN: {}, FP: {}, FN: {}, TP: {} at fold#{}".format(tn, fp, fn, tp, fold_idx))
       self.logger.log("Accuracy at fold#{}: {:.2f}".format(fold_idx, acc_list[-1]))
       self.logger.log("Precision at fold#{}: {:.2f}".format(fold_idx, prec_list[-1]))
       self.logger.log("Recall at fold#{}: {:.2f}".format(fold_idx, rec_list[-1]))
-      self.logger.log("False positives at fold#{}: {:.2f}".format(fold_idx, fp_list[-1]))
+      #self.logger.log("False positives at fold#{}: {:.2f}".format(fold_idx, fp_list[-1]))
 
     self.logger.log("Finished cross validation", show_time = True)
     self.logger.log("Mean accuracy: {}".format(np.average(acc_list)))
     self.logger.log("Mean precision: {}".format(np.average(prec_list)))
     self.logger.log("Mean recall: {}".format(np.average(rec_list)))
-    self.logger.log("Mean false positives: {}".format(np.average(fp_list)))
+    self.logger.log("Mean FP: {}".format(np.average([e[1] for e in confmat_list])))
+    self.logger.log("Mean TP: {}".format(np.average([e[3] for e in confmat_list])))
+    self.logger.log("Total FP: {}".format(sum([e[1] for e in confmat_list])))
+    self.logger.log("Total TP: {}".format(sum([e[3] for e in confmat_list])))

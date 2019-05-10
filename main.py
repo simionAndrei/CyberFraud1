@@ -18,6 +18,6 @@ if __name__ == '__main__':
   cross_validator = CrossValidation(data = data, k_folds = 10, random_seed = 13,
    logger = logger)
 
-  model = RandomForestClassifier(n_estimators = 250, n_jobs = -1)
+  model = RandomForestClassifier(n_estimators = 250, max_depth = 11, random_state = 13, n_jobs = -1)
   #DecisionTreeClassifier(random_state=0)
   cross_validator.evaluate_model(model)  
