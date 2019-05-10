@@ -1,0 +1,470 @@
+/usr/local/bin/python3.7 /Applications/PyCharm.app/Contents/helpers/pydev/pydevconsole.py --mode=client --port=61996
+import sys; print('Python %s on %s' % (sys.version, sys.platform))
+sys.path.extend(['/Users/mihaivo/PycharmProjects/CyberFraud1'])
+Python 3.7.3 (default, Mar 27 2019, 09:23:15)
+Type "copyright", "credits" or "license" for more information.
+IPython 5.0.0 -- An enhanced Interactive Python.
+?         -> Introduction and overview of IPython's features.
+%quickref -> Quick reference.
+help      -> Python's own help system.
+object?   -> Details about 'object', use 'object??' for extra details.
+PyDev console: using IPython 5.0.0
+Python 3.7.3 (default, Mar 27 2019, 09:23:15)
+[Clang 10.0.1 (clang-1001.0.46.3)] on darwin
+runfile('/Users/mihaivo/PycharmProjects/CyberFraud1/main.py', wdir='/Users/mihaivo/PycharmProjects/CyberFraud1')
+2019.05.10-15:03:56 Initialize the logger
+2019.05.10-15:03:56 Create logs folder logs
+2019.05.10-15:03:56 Create log file logs/2019-05-10_15_03_56_log0.html
+2019.05.10-15:03:56 Create models folder models
+2019.05.10-15:03:56 Create output folder output
+2019.05.10-15:03:56 Create data folder data
+2019.05.10-15:03:56 Read config file config.txt
+[2019.05.10-15:03:56] Reading transactions file...
+[2019.05.10-15:03:57] Finish reading 290382 rows [1.07s]
+[2019.05.10-15:03:59] Dropping NaNs 16181
+[2019.05.10-15:03:59] Dropping REFUSED transaction 51029
+[2019.05.10-15:03:59] Drop txid and bookingdate
+[2019.05.10-15:03:59] Replace cvcresponsecode > 3 with 3
+[2019.05.10-15:03:59] Convert all amounts in USD using rates: {'AUD': 0.699165, 'GBP': 1.31061, 'MXN': 0.222776586, 'NZD': 0.66152, 'SEK': 0.104405}
+[2019.05.10-15:04:04] Done converting [4.79s]
+[2019.05.10-15:04:04] Convert datatypes for numeric, timestamps and categorical
+[2019.05.10-15:04:04] Change simple_journal to label and binarize column
+[2019.05.10-15:04:04] Sort after creationdate
+[2019.05.10-15:04:04] Rearrange columns to order ['creationdate', 'card_id', 'mail_id', 'ip_id', 'issuercountrycode', 'txvariantcode', 'bin', 'shoppercountrycode', 'shopperinteraction', 'cardverificationcodesupplied', 'cvcresponsecode', 'accountcode', 'amount', 'currencycode', 'label']
+[2019.05.10-15:04:04] Start extracting additional features
+[2019.05.10-15:05:09] Finished extracting additional features [64.83s]
+[2019.05.10-15:05:09] Dataset after preproc and adding additional feats
+              creationdate  card_id  mail_id  ...  Unique ips  New email  New ip
+178488 2015-10-05 23:07:02    48612    61601  ...           1          1       1
+178489 2015-10-05 23:07:06   128031   138505  ...           1          1       1
+178490 2015-10-05 23:07:41    91965    66713  ...           1          1       1
+178491 2015-10-05 23:08:15    91656   129820  ...           1          1       1
+178492 2015-10-05 23:08:20   159572   197302  ...           1          1       1
+[5 rows x 28 columns]
+[2019.05.10-15:05:10] Drop timestamp columns
+[2019.05.10-15:05:10] Start 10-fold cross validation on 223172 entries
+[2019.05.10-15:05:10] Using SMOTE
+[2019.05.10-15:05:11] Start hyperparameter random grid-search for RandomForestClassifier
+Fitting 3 folds for each of 5 candidates, totalling 15 fits
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 8 concurrent workers.
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True [CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True [CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  30.8s
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  31.8s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  30.9s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.4min
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.4min
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.4min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.1min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.1min
+[Parallel(n_jobs=-1)]: Done   8 out of  15 | elapsed:  3.5min remaining:  3.0min
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.1min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 6.4min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 6.6min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 8.4min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.6min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 8.4min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 8.5min
+[Parallel(n_jobs=-1)]: Done  15 out of  15 | elapsed:  8.5min finished
+[2019.05.10-15:14:08] Hyperparameter random grid-search done [537.22s]
+[2019.05.10-15:14:08] Best params are {'random_state': 13, 'n_estimators': 110, 'min_samples_split': 2, 'min_samples_leaf': 8, 'max_features': 'log2', 'max_depth': None, 'criterion': 'entropy', 'bootstrap': True} with F1: 0.9930439452613471
+[2019.05.10-15:14:37] TN: 22047, FP: 236, FN: 30, TP: 5 at fold#0
+[2019.05.10-15:14:37] Accuracy at fold#0: 0.99
+[2019.05.10-15:14:37] Precision at fold#0: 0.02
+[2019.05.10-15:14:37] Recall at fold#0: 0.14
+[2019.05.10-15:14:37] Using SMOTE
+[2019.05.10-15:14:39] Start hyperparameter random grid-search for RandomForestClassifier
+Fitting 3 folds for each of 5 candidates, totalling 15 fits
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 8 concurrent workers.
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  33.0s
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  33.2s
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  31.5s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.4min
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.4min
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.4min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[Parallel(n_jobs=-1)]: Done   8 out of  15 | elapsed:  3.5min remaining:  3.0min
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.9min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 6.1min
+[Parallel(n_jobs=-1)]: Done  15 out of  15 | elapsed:  8.1min finished
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.9min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.1min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 8.0min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 8.0min
+[2019.05.10-15:23:08] Hyperparameter random grid-search done [509.11s]
+[2019.05.10-15:23:08] Best params are {'random_state': 13, 'n_estimators': 110, 'min_samples_split': 2, 'min_samples_leaf': 8, 'max_features': 'log2', 'max_depth': None, 'criterion': 'entropy', 'bootstrap': True} with F1: 0.9937745128818463
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 8 concurrent workers.
+[2019.05.10-15:23:33] TN: 22079, FP: 204, FN: 26, TP: 9 at fold#1
+[2019.05.10-15:23:33] Accuracy at fold#1: 0.99
+[2019.05.10-15:23:33] Precision at fold#1: 0.04
+[2019.05.10-15:23:33] Recall at fold#1: 0.26
+[2019.05.10-15:23:33] Using SMOTE
+[2019.05.10-15:23:34] Start hyperparameter random grid-search for RandomForestClassifier
+Fitting 3 folds for each of 5 candidates, totalling 15 fits
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  30.0s
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  30.8s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  29.9s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.1min
+[Parallel(n_jobs=-1)]: Done   8 out of  15 | elapsed:  3.5min remaining:  3.0min
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.1min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total=12.1min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total=12.3min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total=21.8min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total=21.8min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total=21.8min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total=19.1min
+[Parallel(n_jobs=-1)]: Done  15 out of  15 | elapsed: 21.9min finished
+[2019.05.10-15:46:01] Hyperparameter random grid-search done [1346.89s]
+[2019.05.10-15:46:01] Best params are {'random_state': 13, 'n_estimators': 110, 'min_samples_split': 2, 'min_samples_leaf': 8, 'max_features': 'log2', 'max_depth': None, 'criterion': 'entropy', 'bootstrap': True} with F1: 0.993235022381591
+[2019.05.10-15:46:28] TN: 22087, FP: 196, FN: 26, TP: 9 at fold#2
+[2019.05.10-15:46:28] Accuracy at fold#2: 0.99
+[2019.05.10-15:46:28] Precision at fold#2: 0.04
+[2019.05.10-15:46:28] Recall at fold#2: 0.26
+[2019.05.10-15:46:28] Using SMOTE
+[2019.05.10-15:46:30] Start hyperparameter random grid-search for RandomForestClassifier
+Fitting 3 folds for each of 5 candidates, totalling 15 fits
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 8 concurrent workers.
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  30.1s
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  30.3s
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  30.6s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[Parallel(n_jobs=-1)]: Done   8 out of  15 | elapsed:  3.4min remaining:  3.0min
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.8min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 6.0min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.8min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.0min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.9min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.8min
+[Parallel(n_jobs=-1)]: Done  15 out of  15 | elapsed:  7.9min finished
+[2019.05.10-15:54:51] Hyperparameter random grid-search done [500.99s]
+[2019.05.10-15:54:51] Best params are {'random_state': 13, 'n_estimators': 110, 'min_samples_split': 2, 'min_samples_leaf': 8, 'max_features': 'log2', 'max_depth': None, 'criterion': 'entropy', 'bootstrap': True} with F1: 0.9921121819449569
+[2019.05.10-15:55:16] TN: 21986, FP: 297, FN: 21, TP: 14 at fold#3
+[2019.05.10-15:55:16] Accuracy at fold#3: 0.99
+[2019.05.10-15:55:16] Precision at fold#3: 0.05
+[2019.05.10-15:55:16] Recall at fold#3: 0.40
+[2019.05.10-15:55:16] Using SMOTE
+[2019.05.10-15:55:17] Start hyperparameter random grid-search for RandomForestClassifier
+Fitting 3 folds for each of 5 candidates, totalling 15 fits
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 8 concurrent workers.
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  30.1s
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  30.9s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  29.3s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.2min
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[Parallel(n_jobs=-1)]: Done   8 out of  15 | elapsed:  3.3min remaining:  2.9min
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.6min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.8min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.3min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.3min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.4min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 4.6min
+[Parallel(n_jobs=-1)]: Done  15 out of  15 | elapsed:  7.5min finished
+[2019.05.10-16:03:10] Hyperparameter random grid-search done [472.48s]
+[2019.05.10-16:03:10] Best params are {'random_state': 13, 'n_estimators': 110, 'min_samples_split': 2, 'min_samples_leaf': 8, 'max_features': 'log2', 'max_depth': None, 'criterion': 'entropy', 'bootstrap': True} with F1: 0.9921253499223442
+[2019.05.10-16:03:33] TN: 22098, FP: 185, FN: 29, TP: 6 at fold#4
+[2019.05.10-16:03:33] Accuracy at fold#4: 0.99
+[2019.05.10-16:03:33] Precision at fold#4: 0.03
+[2019.05.10-16:03:33] Recall at fold#4: 0.17
+[2019.05.10-16:03:34] Using SMOTE
+[2019.05.10-16:03:35] Start hyperparameter random grid-search for RandomForestClassifier
+Fitting 3 folds for each of 5 candidates, totalling 15 fits
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 8 concurrent workers.
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True [CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  28.6s
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  28.9s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  30.2s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.1min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.1min
+[Parallel(n_jobs=-1)]: Done   8 out of  15 | elapsed:  3.4min remaining:  2.9min
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.1min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.6min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.8min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.5min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.6min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 4.8min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.6min
+[Parallel(n_jobs=-1)]: Done  15 out of  15 | elapsed:  7.6min finished
+[2019.05.10-16:11:39] Hyperparameter random grid-search done [483.80s]
+[2019.05.10-16:11:39] Best params are {'random_state': 13, 'n_estimators': 110, 'min_samples_split': 2, 'min_samples_leaf': 8, 'max_features': 'log2', 'max_depth': None, 'criterion': 'entropy', 'bootstrap': True} with F1: 0.9930585667742021
+[2019.05.10-16:12:04] TN: 22083, FP: 200, FN: 27, TP: 7 at fold#5
+[2019.05.10-16:12:04] Accuracy at fold#5: 0.99
+[2019.05.10-16:12:04] Precision at fold#5: 0.03
+[2019.05.10-16:12:04] Recall at fold#5: 0.21
+[2019.05.10-16:12:04] Using SMOTE
+[2019.05.10-16:12:05] Start hyperparameter random grid-search for RandomForestClassifier
+Fitting 3 folds for each of 5 candidates, totalling 15 fits
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 8 concurrent workers.
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  27.9s
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  30.4s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  29.9s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.2min
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.2min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[Parallel(n_jobs=-1)]: Done   8 out of  15 | elapsed:  3.3min remaining:  2.9min
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.6min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.7min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.5min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 4.7min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.6min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.6min
+[Parallel(n_jobs=-1)]: Done  15 out of  15 | elapsed:  7.7min finished
+[2019.05.10-16:20:10] Hyperparameter random grid-search done [484.53s]
+[2019.05.10-16:20:10] Best params are {'random_state': 13, 'n_estimators': 110, 'min_samples_split': 2, 'min_samples_leaf': 8, 'max_features': 'log2', 'max_depth': None, 'criterion': 'entropy', 'bootstrap': True} with F1: 0.9925874124989831
+[2019.05.10-16:20:35] TN: 22065, FP: 218, FN: 24, TP: 10 at fold#6
+[2019.05.10-16:20:35] Accuracy at fold#6: 0.99
+[2019.05.10-16:20:35] Precision at fold#6: 0.04
+[2019.05.10-16:20:35] Recall at fold#6: 0.29
+[2019.05.10-16:20:35] Using SMOTE
+[2019.05.10-16:20:36] Start hyperparameter random grid-search for RandomForestClassifier
+Fitting 3 folds for each of 5 candidates, totalling 15 fits
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 8 concurrent workers.
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  30.7s
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  30.7s
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  29.8s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[Parallel(n_jobs=-1)]: Done   8 out of  15 | elapsed:  3.4min remaining:  3.0min
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.8min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 6.0min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.8min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.0min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.8min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.9min
+[Parallel(n_jobs=-1)]: Done  15 out of  15 | elapsed:  7.9min finished
+[2019.05.10-16:28:54] Hyperparameter random grid-search done [497.77s]
+[2019.05.10-16:28:54] Best params are {'random_state': 13, 'n_estimators': 110, 'min_samples_split': 2, 'min_samples_leaf': 8, 'max_features': 'log2', 'max_depth': None, 'criterion': 'entropy', 'bootstrap': True} with F1: 0.9923489638004959
+[2019.05.10-16:29:18] TN: 22013, FP: 269, FN: 25, TP: 9 at fold#7
+[2019.05.10-16:29:18] Accuracy at fold#7: 0.99
+[2019.05.10-16:29:18] Precision at fold#7: 0.03
+[2019.05.10-16:29:18] Recall at fold#7: 0.26
+[2019.05.10-16:29:18] Using SMOTE
+[2019.05.10-16:29:19] Start hyperparameter random grid-search for RandomForestClassifier
+Fitting 3 folds for each of 5 candidates, totalling 15 fits
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 8 concurrent workers.
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  31.0s
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  31.1s
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  29.5s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 1.9min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 1.9min
+[Parallel(n_jobs=-1)]: Done   8 out of  15 | elapsed:  3.3min remaining:  2.9min
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.6min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.0min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.2min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.9min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.4min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 4.7min
+[Parallel(n_jobs=-1)]: Done  15 out of  15 | elapsed:  7.5min finished
+[2019.05.10-16:37:09] Hyperparameter random grid-search done [470.06s]
+[2019.05.10-16:37:09] Best params are {'random_state': 13, 'n_estimators': 110, 'min_samples_split': 2, 'min_samples_leaf': 8, 'max_features': 'log2', 'max_depth': None, 'criterion': 'entropy', 'bootstrap': True} with F1: 0.9926999150303396
+[2019.05.10-16:37:33] TN: 22167, FP: 115, FN: 26, TP: 8 at fold#8
+[2019.05.10-16:37:33] Accuracy at fold#8: 0.99
+[2019.05.10-16:37:33] Precision at fold#8: 0.07
+[2019.05.10-16:37:33] Recall at fold#8: 0.24
+[2019.05.10-16:37:33] Using SMOTE
+[2019.05.10-16:37:35] Start hyperparameter random grid-search for RandomForestClassifier
+Fitting 3 folds for each of 5 candidates, totalling 15 fits
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 8 concurrent workers.
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  28.7s
+[CV] random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  29.4s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=50, min_samples_split=10, min_samples_leaf=2, max_features=log2, max_depth=5, criterion=gini, bootstrap=True, total=  30.5s
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=30, min_samples_split=2, min_samples_leaf=1, max_features=None, max_depth=5, criterion=gini, bootstrap=True, total= 1.3min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[CV] random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 2.0min
+[Parallel(n_jobs=-1)]: Done   8 out of  15 | elapsed:  3.3min remaining:  2.9min
+[CV]  random_state=13, n_estimators=110, min_samples_split=2, min_samples_leaf=8, max_features=log2, max_depth=None, criterion=entropy, bootstrap=True, total= 1.9min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.6min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 5.8min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.4min
+[CV]  random_state=13, n_estimators=70, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=10, criterion=gini, bootstrap=False, total= 4.8min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.5min
+[CV]  random_state=13, n_estimators=90, min_samples_split=5, min_samples_leaf=2, max_features=None, max_depth=9, criterion=entropy, bootstrap=False, total= 7.5min
+[Parallel(n_jobs=-1)]: Done  15 out of  15 | elapsed:  7.5min finished
+[2019.05.10-16:45:31] Hyperparameter random grid-search done [476.10s]
+[2019.05.10-16:45:31] Best params are {'random_state': 13, 'n_estimators': 110, 'min_samples_split': 2, 'min_samples_leaf': 8, 'max_features': 'log2', 'max_depth': None, 'criterion': 'entropy', 'bootstrap': True} with F1: 0.9913986460611288
+[2019.05.10-16:45:56] TN: 22078, FP: 204, FN: 30, TP: 4 at fold#9
+[2019.05.10-16:45:56] Accuracy at fold#9: 0.99
+[2019.05.10-16:45:56] Precision at fold#9: 0.02
+[2019.05.10-16:45:56] Recall at fold#9: 0.12
+[2019.05.10-16:45:56] Finished cross validation [0.00s]
+[2019.05.10-16:45:56] Mean accuracy: 0.9892997536860338
+[2019.05.10-16:45:56] Mean precision: 0.037765413245409656
+[2019.05.10-16:45:56] Mean recall: 0.23462184873949582
+[2019.05.10-16:45:56] Mean FP: 212.4
+[2019.05.10-16:45:56] Mean TP: 8.1
+[2019.05.10-16:45:56] Total FP: 2124
+[2019.05.10-16:45:56] Total TP: 81

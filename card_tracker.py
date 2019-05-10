@@ -20,7 +20,9 @@ class CardTracker:
         "Amount_Country_Type_Month",
         "Number_Country_Type_Month",
         "Unique emails",
-        "Unique ips"
+        "Unique ips",
+        "New email",
+        "New ip"
     ]
 
     def __init__(self, id) -> None:
@@ -54,8 +56,18 @@ class CardTracker:
         current_ts = entry['creationdate']
         self._move_queue(current_ts)
 
-        self._emails.add(entry['mail_id'])
-        self._ips.add(entry['ip_id'])
+        if entry['mail_id'] not in self._emails:
+            new_email = 1
+            self._emails.add(entry['mail_id'])
+        else:
+            new_email = 0
+
+        if entry['ip_id'] not in self._ips:
+            new_ip = 1
+            self._ips.add(entry['ip_id'])
+
+        else:
+            new_ip = 0
 
         ret = [
             # Txn amount over month
@@ -90,6 +102,10 @@ class CardTracker:
 
             # Number of unique ips used
             len(self._ips),
+
+            new_email,
+
+            new_ip
         ]
 
         # add it
