@@ -2,13 +2,17 @@ import datetime
 import numpy as np
 
 
+# Linked list
 class Node:
     def __init__(self, v=None):
+        # pandas uses the same reference in apply :), discovered the hard way
         self.v = v.copy()
         self.n = None
 
 
+# Class used to store context for a particular card
 class CardTracker:
+    # Names of the features
     colnames = [
         "Txn_Amount_Month",
         "Average_3Months",
@@ -52,6 +56,7 @@ class CardTracker:
         self._emails = set()
         self._ips = set()
 
+    # Consumes a line and outputs the features
     def feed(self, entry):
         current_ts = entry['creationdate']
         self._move_queue(current_ts)
@@ -148,8 +153,9 @@ class CardTracker:
 
         return ret
 
+    # Dump the expired nodes
     def _move_queue(self, current_ts):
-
+        # if we discard a node, subtract it's value from the cached sums
         # 1
         new_date = current_ts - np.timedelta64(1, 'D')
         while self._last_day is not None and self._last_day.v['creationdate'] < new_date:
