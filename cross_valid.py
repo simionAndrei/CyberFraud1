@@ -53,7 +53,7 @@ class CrossValidation():
       plt_title = type(model).__name__ + " " + ("with " if use_smote else "without ") + "SMOTE"
       plt_title += " fold {}".format(fold_idx)
       filename = "roc_" + ("withS_" if use_smote else "withoutS_") + str(fold_idx)
-      filename += ".jpg"
+      filename += ".png"
       create_roc_plot(plt_title, model.predict_proba(crt_X_test), crt_y_test, filename, 
         self.logger)
 
