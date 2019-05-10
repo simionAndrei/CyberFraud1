@@ -33,7 +33,8 @@ def test_xgboost(cross_validator, use_smote):
                           'reg_alpha': reg_alpha,
                           'random_state': random_state}
 
-  cross_validator.evaluate_model(model, model_hyperparams_grid = xgb_hyperparams_grid, 
+  model_hyperparams_file = 'XGBClassifier_params_2019-05-10_21_24_12.json'
+  cross_validator.evaluate_model(model, model_hyperparams_file = model_hyperparams_file, 
     use_smote = use_smote)
 
 
@@ -86,5 +87,5 @@ if __name__ == '__main__':
    logger = logger)
 
   #test_logistic_regression(cross_validator, use_smote = False)
-  #test_randf_forest(cross_validator, use_smote = False)
-  test_xgboost(cross_validator, use_smote = True)
+  test_randf_forest(cross_validator, use_smote = False)
+  #test_xgboost(cross_validator, use_smote = False)
