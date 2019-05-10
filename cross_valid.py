@@ -15,18 +15,23 @@ class CrossValidation():
     self.k_folds = k_folds
     self.random_seed = random_seed
 
-  def evaluate_model(self, model):
+  def evaluate_model(self, model, use_smote = True):
 
     self.logger.log("Start {}-fold cross validation on {} entries".format(
       self.k_folds, self.data['y'].shape[0]))
 
-    strat_kfold = StratifiedKFold(n_splits= self.k_folds, shuffle=False, 
+    strat_kfold = StratifiedKFold(n_splits= self.k_folds, shuffle=True, 
       random_state = self.random_seed)
 
     acc_list, prec_list, rec_list, fp_list = [[] for _ in range(4)]
     for fold_idx, (train_idx, test_idx) in enumerate(strat_kfold.split(self.X, self.y)):
       crt_X_train, crt_X_test = self.X[train_idx], self.X[test_idx]
       crt_y_train, crt_y_test = self.y[train_idx], self.y[test_idx]
+
+      if use_smote:
+        print("SMOTE")
+        sm = SMOTE(random_state = 13)
+        crt_X_train, crt_y_train = sm.fit_sample(crt_X_train, crt_y_train.ravel())
 
       model.fit(crt_X_train, crt_y_train)
 

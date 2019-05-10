@@ -1,4 +1,6 @@
 from feats_utils import extract_features_from_data
+
+from sklearn.preprocessing import StandardScaler
 from sklearn import preprocessing
 
 from random import randint
@@ -136,14 +138,16 @@ class DataPreprocessor():
     self.logger.log("Dataset after preproc and adding additional feats" + os.linesep + "{}".format(
       self.full_df.iloc[rand_idx : rand_idx + 5, :]))
 
+    if normalize:
+      values_to_norm = self.full_df[self.additional_feats_df.columns.to_list() + ['amount']].values
+      normed_values = StandardScaler().fit_transform(values_to_norm)
+      self.full_df[self.additional_feats_df.columns.to_list() + ['amount']] = normed_values
+
+
     self.logger.log("Drop timestamp columns")
     self.full_df.drop(["creationdate"], inplace = True, axis = 1)
 
     X = self.full_df.loc[:, self.full_df.columns != 'label'].values
     y = self.full_df['label'].values
-
-    if normalize:
-      self.min_max_scaler = preprocessing.MinMaxScaler()
-      X = min_max_scaler.fit_transform(X)
 
     return X, y

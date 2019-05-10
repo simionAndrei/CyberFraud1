@@ -3,6 +3,7 @@ from cross_valid import CrossValidation
 from logger import Logger
 
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 
 
 if __name__ == '__main__':
@@ -17,5 +18,6 @@ if __name__ == '__main__':
   cross_validator = CrossValidation(data = data, k_folds = 10, random_seed = 13,
    logger = logger)
 
-  model = DecisionTreeClassifier(random_state=0)
+  model = RandomForestClassifier(n_estimators = 250, n_jobs = -1)
+  #DecisionTreeClassifier(random_state=0)
   cross_validator.evaluate_model(model)  
