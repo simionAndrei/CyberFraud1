@@ -19,6 +19,7 @@ class CrossValidation():
     self.k_folds = k_folds
     self.random_seed = random_seed
 
+  # Evaluates the model using the specified parrameters
   def evaluate_model(self, model, model_hyperparams_grid = None, model_hyperparams_file = None,
     use_smote = True):
 
