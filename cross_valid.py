@@ -38,7 +38,8 @@ class CrossValidation():
       valid_data = {'X': crt_X_train, 'y': crt_y_train}
       grid_searcher = HyperparamGridSearcher(valid_data, self.logger)
 
-      grid_searcher.rand_grid_search(model, model_hyperparams_grid, 50)
+      best_params = grid_searcher.rand_grid_search(model, model_hyperparams_grid, 50)
+      model.set_params(**best_params)
 
       model.fit(crt_X_train, crt_y_train)
 
