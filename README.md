@@ -1,9 +1,13 @@
-# Cyber Fraud assignment 1
+# Cyber Fraud assignment 1 :moneybag:
 
-This is the repository containing the first assignment of the Cyber 
-data analytics course.
+Code for Group 66 python implementation of Cyber Data Analytics assigment 1 CS4035. :lock:
 
-## Project structure
+Team members:
+
+ * [Andrei Simion-Constantinescu](https://www.linkedin.com/in/andrei-simion-constantinescu/)
+ * [Mihai Voicescu](https://github.com/mihai1voicescu)
+
+## Project structure :open_file_folder:
 The structure of the project is as follows:
 * `main.py` - The main entry point in the project. This uses all the necessary components to run the pre-procesing, feature extraction, classificantion and optimization.
 * `card_tracker.py` - Contains the class used to store the context associated with each card and calculates the additional features.
@@ -21,3 +25,15 @@ The structure of the project is as follows:
 * `output/` - Folder where the images output.
 
 For a more detailed look check the code comments.
+
+## Installation :computer:
+The scripts can be run in [Anaconda](https://www.anaconda.com/download/) Windows/Linux environment.
+
+You need to create an Anaconda :snake: `python 3.6` environment named `cyber1`.
+Inside that environment some addition packages needs to be installed. Run the following commands inside Anaconda Prompt ⌨:
+```shell
+(base) conda create -n cyber1 python=3.6 anaconda
+(base) conda activate cyber1
+(cyber1) conda install -c conda-forge imbalanced-learn
+(cyber1) conda install -c anaconda py-xgboost
+```
