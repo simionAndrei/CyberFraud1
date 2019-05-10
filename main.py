@@ -3,20 +3,16 @@ from cross_valid import CrossValidation
 from logger import Logger
 
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
+from xgboost import XGBClassifier
 
+import numpy as np
 
-if __name__ == '__main__':
+def test_xgboost(cross_validator, use_smote):
+  pass
 
-
-  logger = Logger(show = True, html_output = True, config_file = "config.txt")
-  transact_preprocessor = DataPreprocessor(logger)
-
-  X, y = transact_preprocessor.get_preprocessed_data(normalize = True)
-  data = {'X': X, 'y': y}
-
-  cross_validator = CrossValidation(data = data, k_folds = 10, random_seed = 13,
-   logger = logger)
+def test_rand_forest(cross_validator, use_smote):
 
   model = RandomForestClassifier(n_jobs = -1)
 
@@ -40,5 +36,30 @@ if __name__ == '__main__':
                           'random_state': random_state}
 
   model_hyperparams_file = 'RandomForestClassifier_params_2019-05-10_19_05_57.json'
-  #DecisionTreeClassifier(random_state=0)
-  cross_validator.evaluate_model(model, model_hyperparams_file = model_hyperparams_file)  
+  cross_validator.evaluate_model(model, model_hyperparams_file = model_hyperparams_file, 
+    use_smote = use_smote)
+
+
+def test_logistic_regression(cross_validator, use_smote):
+
+  model = LogisticRegression()
+
+  logreg_hyperparams_grid  = {'C' : np.linspace(1, 10, 10)}
+  cross_validator.evaluate_model(model, model_hyperparams_grid = logreg_hyperparams_grid, 
+    use_smote = use_smote)
+
+if __name__ == '__main__':
+
+
+  logger = Logger(show = True, html_output = True, config_file = "config.txt")
+  transact_preprocessor = DataPreprocessor(logger)
+
+  X, y = transact_preprocessor.get_preprocessed_data(normalize = True)
+  data = {'X': X, 'y': y}
+
+  cross_validator = CrossValidation(data = data, k_folds = 10, random_seed = 13,
+   logger = logger)
+
+  test_logistic_regression(cross_validator, use_smote = False)
+  #test_randf_forest(cross_validator, use_smote = False)
+  #test_xgboost(cross_validator, use_smote = False)

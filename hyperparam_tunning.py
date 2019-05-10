@@ -25,7 +25,7 @@ class HyperparamGridSearcher():
     best_score = random_grid_search.best_score_
     
     self.logger.log("Hyperparameter random grid-search done", show_time = True)
-    self.logger.log("Best params are {} with F1: {}".format(best_params, best_score))
+    self.logger.log("Best params are {} with AUC: {}".format(best_params, best_score))
 
     params_filename = type(classifier).__name__ + "_params_" + self.logger.get_time_prefix()
     params_filename += ".json"

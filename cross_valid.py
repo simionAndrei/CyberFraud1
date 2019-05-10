@@ -6,6 +6,7 @@ from imblearn.over_sampling import SMOTE
 
 import numpy as np
 import json
+import time
 
 from hyperparam_tunning import HyperparamGridSearcher
 from plot_utils import create_roc_plot
@@ -24,6 +25,7 @@ class CrossValidation():
 
     self.logger.log("Start {}-fold cross validation on {} entries".format(
       self.k_folds, self.data['y'].shape[0]))
+    start = time.time()
 
     strat_kfold = StratifiedKFold(n_splits= self.k_folds, shuffle=False, 
       random_state = self.random_seed)
@@ -37,6 +39,10 @@ class CrossValidation():
         self.logger.log("Using SMOTE")
         sm = SMOTE(random_state = 13)
         crt_X_train, crt_y_train = sm.fit_sample(crt_X_train, crt_y_train.ravel())
+        sample_weight = [1 if int(sample) == 1 else 1 for sample in crt_y_train]
+      else:
+        sample_weight = [110 if int(sample) == 1 else 1 for sample in crt_y_train]
+
 
       if model_hyperparams_grid:
         valid_data = {'X': crt_X_train, 'y': crt_y_train}
@@ -48,7 +54,7 @@ class CrossValidation():
 
       model.set_params(**hyperparams)
 
-      model.fit(crt_X_train, crt_y_train)
+      model.fit(crt_X_train, crt_y_train, sample_weight = sample_weight)
 
       plt_title = type(model).__name__ + " " + ("with " if use_smote else "without ") + "SMOTE"
       plt_title += " fold {}".format(fold_idx)
@@ -59,7 +65,7 @@ class CrossValidation():
 
       y_pred = model.predict_proba(crt_X_test)
       y_pred = y_pred[:, 1]
-      y_pred = y_pred > 0.6
+      y_pred = y_pred > 0.5
 
       tn, fp, fn, tp = confusion_matrix(crt_y_test, y_pred).ravel()
       acc_list.append(accuracy_score(crt_y_test, y_pred))
@@ -71,9 +77,8 @@ class CrossValidation():
       self.logger.log("Accuracy at fold#{}: {:.2f}".format(fold_idx, acc_list[-1]))
       self.logger.log("Precision at fold#{}: {:.2f}".format(fold_idx, prec_list[-1]))
       self.logger.log("Recall at fold#{}: {:.2f}".format(fold_idx, rec_list[-1]))
-      #self.logger.log("False positives at fold#{}: {:.2f}".format(fold_idx, fp_list[-1]))
-
-    self.logger.log("Finished cross validation", show_time = True)
+  
+    self.logger.log("Finished cross validation in {:.2f}s".format(time.time() - start))
     self.logger.log("Mean accuracy: {}".format(np.average(acc_list)))
     self.logger.log("Mean precision: {}".format(np.average(prec_list)))
     self.logger.log("Mean recall: {}".format(np.average(rec_list)))
